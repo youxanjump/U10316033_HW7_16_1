@@ -2,20 +2,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class pickFourCards{
+public class pickFourCards extends JFrame{
+
+	int[] deck = new int[52];
 	
-	public static void main(String args[]){
-		dealCard frame = new dealCard();
-		frame.setTitle("Pick Four Cards");
-		frame.setLocationRelativeTo(null);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(300,200);
-		frame.setVisible(true);
-	}
-
-}
-
-class dealCard extends JFrame{
 	private JButton jbtRefresh = new JButton("Refresh");
 	private ImageIcon poker0 = new ImageIcon("image/card/1.png");
 	private ImageIcon poker1 = new ImageIcon("image/card/2.png");
@@ -70,13 +60,44 @@ class dealCard extends JFrame{
 	private ImageIcon poker50 = new ImageIcon("image/card/51.png");
 	private ImageIcon poker51 = new ImageIcon("image/card/52.png");
 	
-	public dealCard(){
+	public pickFourCards(){
+		for(int i = 0; i < deck.length; i++)
+			deck[i] = i;
+			
+		ImageIcon[] card = {poker0,poker1,poker2,poker3,poker4,poker5,poker6,poker7,poker8,poker9,
+							poker10,poker11,poker12,poker13,poker14,poker15,poker16,poker17,poker18,poker19,
+							poker20,poker21,poker22,poker23,poker24,poker25,poker26,poker27,poker28,poker29,
+							poker30,poker31,poker32,poker33,poker34,poker35,poker36,poker37,poker38,poker39,
+							poker40,poker41,poker42,poker43,poker44,poker45,poker46,poker47,poker48,poker49,
+							poker50,poker51};
+				  
+		for(int i = 0; i < deck.length; i++){
+			int index = (int)(Math.random() * deck.length);
+			int temp = deck[i];
+			deck[i] = deck[index];
+			deck[index] = temp;
+		}
+		
 		JPanel panel = new JPanel();
 		panel.add(jbtRefresh);
-		GridLayout grid = new GridLayout(1,4,0,0);
-
+		JPanel panel1 = new JPanel();
+		panel1.setLayout(new GridLayout(1,4,5,5));
+		for(int i = 0; i < 4; i++){
+			panel1.add(new JButton(card[deck[i]]));
+		}
 		
 		this.add(panel,BorderLayout.SOUTH);
-		this.add(grid,BorderLayout.CENTER);
+		this.add(panel1,BorderLayout.CENTER);
+		
 	}
+	
+	public static void main(String args[]){
+		pickFourCards frame = new pickFourCards();
+		frame.setTitle("Pick Four Cards");
+		frame.setLocationRelativeTo(null);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(300,200);
+		frame.setVisible(true);
+	}
+
 }
